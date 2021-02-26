@@ -1,4 +1,5 @@
 # NewRelic Integration Middleware
+[![Go Reference](https://pkg.go.dev/badge/github.com/nobuyo/nrfiber.svg)](https://pkg.go.dev/github.com/nobuyo/nrfiber)
 
 NewRelic Integration middleware for [Fiber](https://github.com/gofiber/fiber).
 
