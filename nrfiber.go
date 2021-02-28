@@ -1,13 +1,10 @@
 package nrfiber
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
-	newrelic "github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/valyala/fasthttp"
 )
 
@@ -60,23 +57,20 @@ func New(config ...Config) fiber.Handler {
 	if len(config) > 0 {
 		cfg = config[0]
 	}
-	app, err := newrelic.NewApplication(
-		newrelic.ConfigAppName(cfg.AppName),
-		newrelic.ConfigLicense(cfg.LicenseKey),
-		newrelic.ConfigDebugLogger(os.Stdout),
-	)
-	if nil != err {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+
+	app := cfg.NewRelicApp
 
 	return func(c *fiber.Ctx) error {
 		// Don't execute middleware if Next returns true
 		if cfg.Next != nil && cfg.Next(c) {
 			return c.Next()
 		}
+
 		txn := app.StartTransaction(c.Path())
 		txn.SetWebRequestHTTP(toHTTPRequest(c.Context()))
+
+		c.Locals("newrelic_transaction", txn)
+
 		defer func() {
 			rw := txn.SetWebResponse(&ResponseWriter{
 				header: transformResponseHeaders(&c.Context().Response),

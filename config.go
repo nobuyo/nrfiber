@@ -1,9 +1,8 @@
 package nrfiber
 
 import (
-	"os"
-
 	"github.com/gofiber/fiber/v2"
+	newrelic "github.com/newrelic/go-agent/v3/newrelic"
 )
 
 // Config defines the config for middleware.
@@ -13,20 +12,14 @@ type Config struct {
 	// Optional. Default: nil
 	Next func(c *fiber.Ctx) bool
 
-	// AppName defines name of this fiber app in NewRelic
+	// NewRelicApp is newrelic.Application
 	//
-	// Optional. Default value "Fiber App".
-	AppName string
-
-	// AppName defines name of this fiber app in NewRelic
-	//
-	// Optional. Default value `os.Getenv("NEW_RELIC_LICENSE_KEY")`.
-	LicenseKey string
+	// Required. Default: empty Application
+	NewRelicApp *newrelic.Application
 }
 
 // ConfigDefault is the default config
 var ConfigDefault = Config{
-	Next:       nil,
-	AppName:    "Fiber App",
-	LicenseKey: os.Getenv("NEW_RELIC_LICENSE_KEY"),
+	Next:        nil,
+	NewRelicApp: &newrelic.Application{},
 }
