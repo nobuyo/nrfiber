@@ -75,10 +75,12 @@ func New(config ...Config) fiber.Handler {
 			rw := txn.SetWebResponse(&ResponseWriter{
 				header: transformResponseHeaders(&c.Context().Response),
 			})
-			rw.Write(c.Context().Response.Body())
+
 			rw.WriteHeader(c.Context().Response.StatusCode())
+
 			txn.End()
 		}()
+
 		return c.Next()
 	}
 }
