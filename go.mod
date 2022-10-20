@@ -1,4 +1,4 @@
-module github.com/nobuyo/nrfiber
+module github.com/arielsrv/nrfiber
 
 go 1.14
 
