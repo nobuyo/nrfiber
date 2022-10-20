@@ -1,6 +1,6 @@
 module github.com/arielsrv/nrfiber
 
-go 1.14
+go 1.19
 
 require (
 	github.com/gofiber/fiber/v2 v2.38.1
