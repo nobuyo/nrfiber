@@ -3,7 +3,7 @@ module github.com/arielsrv/nrfiber
 go 1.19
 
 require (
-	github.com/gofiber/fiber/v2 v2.39.0
+	github.com/gofiber/fiber/v2 v2.40.0
 	github.com/newrelic/go-agent/v3 v3.20.1
 	github.com/valyala/fasthttp v1.41.0
 )
